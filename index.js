@@ -2,6 +2,7 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const {Triangle, Circle, Square } = require('./lib/shapes');
 
+function promptQuestions() {
 inquirer.prompt([{
     type: 'input',
     name:'text',
@@ -26,6 +27,14 @@ inquirer.prompt([{
 },
 ])
     .then(answers => {
-        let shape;
-        
+        if (answers.text.length > 3) {
+            console.log("Value must not exceed 3 characters");
+            promptQuestions();
+        } else {
+            fs.writeToFile('logo.svg', answers);
+            console.log('Your logo.svg was successfully generated!')
+        }
         });
+}
+
+promptQuestions();
